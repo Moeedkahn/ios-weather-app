@@ -56,3 +56,21 @@ struct DailyWeather: Codable {
         case minTemperature = "temperature_2m_min"
     }
 }
+
+// MARK: - Clean models for Views to consume
+// These are what views actually use — converted from raw API structs above
+
+struct HourlyForecast: Identifiable {
+    let id    = UUID()
+    let time:        String      // "14:00"
+    let temperature: Double
+    let condition:   WeatherCondition
+}
+
+struct DailyForecast: Identifiable {
+    let id    = UUID()
+    let day:         String      // "Monday"
+    let condition:   WeatherCondition
+    let maxTemp:     Double
+    let minTemp:     Double
+}
