@@ -147,6 +147,11 @@ struct WeatherService {
         formatter.formatOptions = [.withFullDate, .withTime, .withColonSeparatorInTime]
         return formatter.date(from: string)
     }
+    private func formatHour(_ date: Date) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "ha"
+        return formatter.string(from: date).lowercased()
+    }
     private func dayName(from string: String) -> String {
         let input = DateFormatter()
         input.dateFormat = "yyyy-MM-dd"
