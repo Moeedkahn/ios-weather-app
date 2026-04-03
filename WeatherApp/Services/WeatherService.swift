@@ -27,22 +27,18 @@ enum WeatherError: LocalizedError {
     }
 }
 struct WeatherService {
-
     // MARK: - Base URL components
     private let baseURL = "https://api.open-meteo.com/v1/forecast"
-
     private let currentParams = [
         "temperature_2m",
         "weathercode",
         "windspeed_10m",
         "relativehumidity_2m"
     ].joined(separator: ",")
-
     private let hourlyParams = [
         "temperature_2m",
         "weathercode"
     ].joined(separator: ",")
-
     private let dailyParams = [
         "weathercode",
         "temperature_2m_max",
@@ -137,7 +133,6 @@ struct WeatherService {
             .map { index, zipped in
                 let ((timeString, code), (maxTemp, minTemp)) = zipped
                 let day = index == 0 ? "Today" : dayName(from: timeString)
-
                 return DailyForecast(
                     day:       day,
                     condition: WeatherCondition.from(code: code),
@@ -146,20 +141,12 @@ struct WeatherService {
                 )
             }
     }
-
     // MARK: - Date helpers
     private func parseDate(_ string: String) -> Date? {
         let formatter = ISO8601DateFormatter()
         formatter.formatOptions = [.withFullDate, .withTime, .withColonSeparatorInTime]
         return formatter.date(from: string)
     }
-
-    private func formatHour(_ date: Date) -> String {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "ha"
-        return formatter.string(from: date).lowercased()
-    }
-
     private func dayName(from string: String) -> String {
         let input = DateFormatter()
         input.dateFormat = "yyyy-MM-dd"
