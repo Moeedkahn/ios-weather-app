@@ -7,7 +7,25 @@
 
 import Foundation
 import CoreLocation
+enum WeatherError: LocalizedError {
+    case invalidURL
+    case networkError(Error)
+    case decodingError(Error)
+    case noData
 
+    var errorDescription: String? {
+        switch self {
+        case .invalidURL:
+            return "Something went wrong building the request."
+        case .networkError(let error):
+            return "Network error: \(error.localizedDescription)"
+        case .decodingError:
+            return "Could not read weather data. Please try again."
+        case .noData:
+            return "No weather data received."
+        }
+    }
+}
 struct WeatherService {
 
     // MARK: - Base URL components
