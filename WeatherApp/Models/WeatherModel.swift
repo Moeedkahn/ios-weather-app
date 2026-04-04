@@ -113,3 +113,30 @@ final class WeatherModel: NSObject {
         "\(Int(humidity.rounded()))%"
     }
 }
+
+// MARK: - CLLocationManagerDelegate
+extension WeatherModel: CLLocationManagerDelegate {
+
+    func locationManager(_ manager: CLLocationManager,
+                         didUpdateLocations locations: [CLLocation]) {
+        guard let location = locations.first else { return }
+        fetchWeather(for: location)
+    }
+
+    func locationManager(_ manager: CLLocationManager,
+                         didFailWithError error: Error) {
+        appState = .error("Could not get your location. Please try again.")
+    }
+
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        locationStatus = manager.authorizationStatus
+        switch manager.authorizationStatus {
+        case .authorizedWhenInUse, .authorizedAlways:
+            fetchLocation()
+        case .denied, .restricted:
+            appState = .error("Location access denied. Please enable it in Settings.")
+        default:
+            break
+        }
+    }
+}
