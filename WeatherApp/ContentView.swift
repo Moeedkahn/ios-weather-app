@@ -12,19 +12,19 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-//            switch model.appState {
-//            case .idle:
-//                IdleView(model: model)
-//
-//            case .loading:
-//                LoadingView(condition: model.condition)
-//
-//            case .success:
-//                WeatherView(model: model)
-//
-//            case .error(let message):
-//                ErrorView(message: message, model: model)
-//            }
+            switch model.appState {
+            case .idle:
+                IdleView(model: model)
+
+            case .loading:
+                LoadingView(condition: model.condition)
+
+            case .success:
+                WeatherView(model: model)
+
+            case .error(let message):
+                ErrorView(message: message, model: model)
+            }
         }
         .animation(.easeInOut(duration: 0.4), value: stateKey)
         .onAppear {
