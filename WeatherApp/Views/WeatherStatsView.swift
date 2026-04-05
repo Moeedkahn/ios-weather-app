@@ -30,3 +30,4 @@ struct WeatherStatsView: View {
         }
     }
 }
+
